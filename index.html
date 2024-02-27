@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <title>Final project</title>
+
+    <meta name="author" content="Luis Guaiquirian" />
+
+    <meta
+      name="description"
+      content="Luis Guaiquirian is a student web programmer, based in London Ontario, Canada."
+    />
+
+    <link rel="stylesheet" href="css/main.css" />
+
+    <meta name="keywords" content="London Ontario" />
+
+    <!-- Google font Roboto -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Online store</h1>
+
+    <div class="wrapp">
+      <!-- Intro section top-right -->
+      <div class="wrapp-intro">
+        <div class="wrapp-intro-time">#datetime here#</div>
+        <div class="wrapp-intro-currency">
+          Currency:
+          <span class="flag">
+            <img
+              class="current-flag"
+              src="images/canada.png"
+              alt="Currency flag"
+          /></span>
+          <select class="currencySelector">
+            <option selected value="CAD">CAD</option>
+            <option value="CLP">CLP</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- products table -->
+      <fieldset class="orderSection">
+        <legend>Store Items</legend>
+        <select class="displayFilter">
+          <option>All</option>
+          <option value="carseat">Car Seats</option>
+          <option value="strollers">Strollers</option>
+          <option value="cribs">Cribs</option>
+        </select>
+
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Product Name</th>
+              <th>Price</th>
+              <th>Description</th>
+              <th>Quantity on Hand</th>
+              <th>Max</th>
+              <th>Category</th>
+              <th>Image</th>
+            </tr>
+          </thead>
+          <tbody class="productsWrapper">
+            <!-- products generated here-->
+          </tbody>
+        </table>
+      </fieldset>
+
+      <!-- Select items section -->
+      <fieldset class="itemSelector">
+        <legend>Select items</legend>
+
+        <div class="input-row">
+          <label for="addItemId">Item ID:</label>
+          <input
+            type="text"
+            id="addItemId"
+            placeholder="Insert product ID example: PDD01"
+          />
+          <span id="addIDValidationMessage"></span>
+        </div>
+
+        <div class="input-row">
+          <label for="addItemQty">Quantity:</label>
+          <input type="number" id="addItemQty" />
+          <span id="addQtyValidationMessage"></span>
+        </div>
+
+        <input class="btn" type="button" value="Item Details" />
+        <input class="btn" type="button" value="Add Item" />
+        <input class="btn" type="button" value="Remove Item" />
+      </fieldset>
+
+      <!-- Cart section -->
+      <fieldset class="cartSummary">
+        <legend>Items in your cart</legend>
+        <!-- <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>
+    
+            <tr>
+              <td class="product-id">PID01</td>
+              <td class="product-price">$29.99</td>
+              <td class="required-qty">3</td>
+              <td class="item-subtotal">$89.97</td>
+            </tr>
+         
+            <tr>
+              <td class="product-id">PID01</td>
+              <td class="product-price">$29.99</td>
+              <td class="required-qty">1</td>
+              <td class="item-subtotal">$29.99</td>
+            </tr>
+          </tbody>
+        </table> -->
+        <p>No Items In Cart. Add Items to Cart</p>
+        <br />
+        <hr />
+        <br />
+        <div id="cartOutput">
+          Items Subtotal: $0.00 <br />
+          Estimated Shipping: $0.00
+        </div>
+        <br />
+        <div id="cartCheckout">
+          Subtotal: $0.00 <br />
+          Estimated Tax: $0.00 <br />
+          Order total: $0.00
+        </div>
+      </fieldset>
+
+      <!-- review section -->
+      <fieldset class="reviewSection">
+        <legend>Review an item</legend>
+
+        <div class="input-row">
+          <label for="reviewId">Item ID:</label>
+          <input type="text" id="reviewId" />
+          <span id="reviewIdMsg"></span>
+        </div>
+
+        <div class="input-row">
+          <label for="reviewDesc">Review:</label>
+          <input type="text" id="reviewDesc" size="100" />
+        </div>
+
+        <div class="input-row">
+          <label for="reviewNum"
+            >Rating <br />
+            out of 5:
+          </label>
+          <input type="number" id="reviewNum" />
+          <span id="addRatingValidationMessage"></span>
+        </div>
+
+        <input class="btn" type="button" value="Submit review" />
+      </fieldset>
+    </div>
+    <script src="javascript/script.js"></script>
+  </body>
+</html>

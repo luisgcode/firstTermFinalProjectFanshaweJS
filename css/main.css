@@ -1,0 +1,232 @@
+html {
+  font-size: 62.5%;
+  /* For using rem correclty 10px based */
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1.6rem;
+  background: #f4f6fa;
+}
+
+h1 {
+  text-align: center;
+}
+
+ul,
+li,
+figure,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+/*********************************************
+                MAIN WRAPP
+*********************************************/
+.wrapp {
+  width: 97%;
+  max-width: 1400px;
+  margin: 5rem auto;
+  /* display: flex;
+  flex-direction: column; */
+  display: grid;
+  grid-template-columns: 40% 60%;
+  grid-gap: 2rem;
+}
+
+/*********************************************
+                wrapp-intro
+*********************************************/
+.wrapp-intro {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  grid-column: 1/-1;
+  grid-row: 1/2;
+}
+.current-flag {
+  width: 20px;
+}
+
+/* Currency button */
+.currencySelector {
+  margin: 1rem 0;
+  padding: 0.4rem;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  color: royalblue;
+  background: transparent;
+  font-weight: bold;
+  border: none;
+}
+
+/*********************************************
+               Products table
+*********************************************/
+/* Begin fieldset */
+fieldset {
+  border-radius: 10px;
+  border: none;
+  background: white;
+  padding: 2rem;
+  box-shadow: 5px 5px 25px rgba(0, 0, 0, 0.163);
+  margin: 2rem 0;
+}
+
+legend {
+  font-size: 2.3rem;
+  background: white;
+  border-radius: 10px;
+  padding: 0.5rem 3rem;
+  color: royalblue;
+  letter-spacing: 2px;
+  position: relative;
+}
+
+legend::after {
+  content: "";
+  position: absolute;
+  height: 3px;
+  border-radius: 15px;
+  width: 20%;
+  background: royalblue;
+  bottom: 1px;
+  left: 22%;
+  transform: translate(-50%);
+}
+
+.orderSection {
+  grid-column: 1/-1;
+  grid-row: 2/3;
+}
+
+/* Btn to filter */
+.displayFilter {
+  margin: 1rem 0;
+  padding: 0.8rem;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  background: #f4f6fa;
+  color: royalblue;
+  font-weight: bold;
+  border: none;
+}
+
+table {
+  width: 100%;
+  text-align: center;
+  font-size: 1.4rem;
+}
+
+/* heading table */
+th {
+  border-radius: 3px;
+  background: #f4f6fa;
+  padding: 0.5rem;
+  border: 1px solid black;
+  font-size: 1.2rem;
+}
+
+td {
+  border: 1px solid black;
+}
+
+.product-name {
+  text-transform: uppercase;
+}
+
+.product-id {
+  font-weight: bold;
+}
+.product-price {
+  font-weight: bold;
+  min-width: 120px;
+}
+.product-descr {
+  font-size: 1.2rem;
+  max-width: 200px;
+  padding: 1rem;
+  text-align: justify;
+}
+.product-qty {
+  width: 110px;
+}
+.product-max {
+  /*  */
+}
+.product-cat {
+  text-transform: uppercase;
+}
+
+.product-photo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-image {
+  width: 60px;
+  border-radius: 50%;
+  border: 1px solid rgba(65, 105, 225, 0.318);
+  transition: all 0.3s ease;
+}
+
+.product-image:hover {
+  transform: scale(4) translateX(-20px);
+  cursor: pointer;
+}
+
+/*********************************************
+           Select items section
+*********************************************/
+.itemSelector {
+}
+
+.input-row {
+  margin: 0 1rem 2rem 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.input-row label {
+  min-width: 70px;
+}
+
+.input-row input {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 3px;
+  border: none;
+  background: #f4f6fa;
+}
+
+.input-row span {
+  position: absolute;
+}
+
+.btn {
+  color: white;
+  background: royalblue;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  margin: 0 0.3rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  background-color: rgba(65, 105, 225, 0.842);
+}
+
+/*********************************************
+              Cart section
+*********************************************/
+/*********************************************
+              review section
+*********************************************/
