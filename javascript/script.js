@@ -131,7 +131,7 @@ const loadPage = function () {
     "car seat",
     null,
     null,
-    '<img class="product-image" src="/images/car-seat-convertible-advocate.png" alt=" Sport number two" />'
+    '<img class="product-image" src="images/car-seat-convertible-advocate.png" alt=" Sport number two" />'
   );
 
   let product2 = new storeItem(
@@ -145,7 +145,7 @@ const loadPage = function () {
     "car seat",
     null,
     null,
-    '<img class="product-image" src="/images/car-seat-convertible-grow-and-go.png" alt=" Sport number two" />'
+    '<img class="product-image" src="images/car-seat-convertible-grow-and-go.png" alt=" Sport number two" />'
   );
 
   let product3 = new storeItem(
@@ -159,7 +159,7 @@ const loadPage = function () {
     "crib",
     null,
     null,
-    '<img class="product-image" src="/images/crib-luna.png" alt=" Sport number two" />'
+    '<img class="product-image" src="images/crib-luna.png" alt=" Sport number two" />'
   );
 
   let product4 = new storeItem(
@@ -173,7 +173,7 @@ const loadPage = function () {
     "Stroller",
     null,
     null,
-    '<img class="product-image" src="/images/stroller-forest.png" alt=" Sport number two" />'
+    '<img class="product-image" src="images/stroller-forest.png" alt=" Sport number two" />'
   );
 
   let product5 = new storeItem(
@@ -187,7 +187,7 @@ const loadPage = function () {
     "crib",
     null,
     null,
-    '<img class="product-image" src="/images/crib-essential.png" alt=" Sport number two" />'
+    '<img class="product-image" src="images/crib-essential.png" alt=" Sport number two" />'
   );
 
   let product6 = new storeItem(
@@ -201,7 +201,7 @@ const loadPage = function () {
     "stroller",
     null,
     null,
-    '<img class="product-image" src="/images/stroller-spark.png" alt=" Sport number two" />'
+    '<img class="product-image" src="images/stroller-spark.png" alt=" Sport number two" />'
   );
 
   storeItems.push(product1, product2, product3, product4, product5, product6);
