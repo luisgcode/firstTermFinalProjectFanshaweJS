@@ -3,7 +3,7 @@ Work in progress....
 
 ## 📜 JavaScript course - Final Project term 01 📜
 
-The final project for term 01 of the JS course in the career of web development and internet applications. Fanshawe College.
+The final project for term 01 of the JS course in the program of web development and internet applications. Fanshawe College.
 
 ## 👨‍💻 Used Technologies 👨‍💻
 
