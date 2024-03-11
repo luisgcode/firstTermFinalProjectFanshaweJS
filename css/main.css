@@ -175,7 +175,7 @@ td {
 }
 
 .product-image:hover {
-  transform: scale(4) translateX(-20px);
+  transform: scale(2) translateX(-20px);
   cursor: pointer;
 }
 

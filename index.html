@@ -51,10 +51,10 @@
       <fieldset class="orderSection">
         <legend>Store Items</legend>
         <select class="displayFilter">
-          <option>All</option>
-          <option value="carseat">Car Seats</option>
-          <option value="strollers">Strollers</option>
-          <option value="cribs">Cribs</option>
+          <option value="all">All</option>
+          <option value="car seat">Car Seats</option>
+          <option value="stroller">Strollers</option>
+          <option value="crib">Cribs</option>
         </select>
 
         <table>
@@ -96,15 +96,15 @@
           <span id="addQtyValidationMessage"></span>
         </div>
 
-        <input class="btn" type="button" value="Item Details" />
-        <input class="btn" type="button" value="Add Item" />
-        <input class="btn" type="button" value="Remove Item" />
+        <input class="btnDetails" type="button" value="Item Details" />
+        <input class="btnAddItem" type="button" value="Add Item" />
+        <input class="btnremoveItem" type="button" value="Remove Item" />
       </fieldset>
 
       <!-- Cart section -->
       <fieldset class="cartSummary">
         <legend>Items in your cart</legend>
-        <!-- <table>
+        <table>
           <thead>
             <tr>
               <th>ID</th>
@@ -114,25 +114,14 @@
             </tr>
           </thead>
           <tbody>
-    
             <tr>
               <td class="product-id">PID01</td>
               <td class="product-price">$29.99</td>
               <td class="required-qty">3</td>
               <td class="item-subtotal">$89.97</td>
             </tr>
-         
-            <tr>
-              <td class="product-id">PID01</td>
-              <td class="product-price">$29.99</td>
-              <td class="required-qty">1</td>
-              <td class="item-subtotal">$29.99</td>
-            </tr>
           </tbody>
-        </table> -->
-        <p>No Items In Cart. Add Items to Cart</p>
-        <br />
-        <hr />
+        </table>
         <br />
         <div id="cartOutput">
           Items Subtotal: $0.00 <br />
