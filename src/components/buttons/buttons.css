@@ -1,0 +1,11 @@
+/* Display filter button */
+.displayFilter {
+  margin: 1rem 0;
+  padding: 0.8rem;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  background: #f4f6fa;
+  color: royalblue;
+  font-weight: bold;
+  border: none;
+}

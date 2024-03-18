@@ -1,32 +1,20 @@
 @import url(/public/assets/styles/typography.css);
 @import url(/public/assets/styles/utilities.css);
 @import url(/public/assets/styles/variables.css);
+@import url(/src/components/buttons/buttons.css);
 @import url(/src/components/carrousel/carrousel.css);
-@import url(/src/components//footer/footer.css);
 @import url(/src/components/form/form.css);
 @import url(/src/components/header/header.css);
 @import url(/src/components/navigation/navigation.css);
+@import url(/src/components/productTable/productTable.css);
 @import url(/src/pages/about/aboutPage.css);
 @import url(/src/pages/contact/contactPage.css);
 @import url(/src/pages/home/homePage.css);
 
 /* General styling ⬇️ */
 
-html {
-  font-size: 62.5%;
-  /* For using rem correclty 10px based */
-}
-
 body {
-  font-family: "Roboto", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  font-size: 1.6rem;
   background: #f4f6fa;
-}
-
-h1 {
-  text-align: center;
 }
 
 ul,
@@ -37,50 +25,7 @@ p {
   padding: 0;
 }
 
-/*********************************************
-                  MAIN WRAPP
-  *********************************************/
-.wrapp {
-  width: 97%;
-  max-width: 1400px;
-  margin: 5rem auto;
-  /* display: flex;
-    flex-direction: column; */
-  display: grid;
-  grid-template-columns: 40% 60%;
-  grid-gap: 2rem;
-}
-
-/*********************************************
-                  wrapp-intro
-  *********************************************/
-.wrapp-intro {
-  display: flex;
-  align-items: flex-end;
-  flex-direction: column;
-  grid-column: 1/-1;
-  grid-row: 1/2;
-}
-.current-flag {
-  width: 20px;
-}
-
-/* Currency button */
-.currencySelector {
-  margin: 1rem 0;
-  padding: 0.4rem;
-  font-size: 1.2rem;
-  border-radius: 5px;
-  color: royalblue;
-  background: transparent;
-  font-weight: bold;
-  border: none;
-}
-
-/*********************************************
-                 Products table
-  *********************************************/
-/* Begin fieldset */
+/* General styles for all the fieldsets */
 fieldset {
   border-radius: 10px;
   border: none;
@@ -110,23 +55,6 @@ legend::after {
   bottom: 1px;
   left: 22%;
   transform: translate(-50%);
-}
-
-.orderSection {
-  grid-column: 1/-1;
-  grid-row: 2/3;
-}
-
-/* Btn to filter */
-.displayFilter {
-  margin: 1rem 0;
-  padding: 0.8rem;
-  font-size: 1.2rem;
-  border-radius: 5px;
-  background: #f4f6fa;
-  color: royalblue;
-  font-weight: bold;
-  border: none;
 }
 
 table {

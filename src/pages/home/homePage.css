@@ -1,0 +1,33 @@
+.wrapp {
+  width: 97%;
+  max-width: 1400px;
+  margin: 5rem auto;
+  display: grid;
+  grid-template-columns: 40% 60%;
+  grid-gap: 2rem;
+}
+
+.wrapp-intro {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  grid-column: 1/-1;
+  grid-row: 1/2;
+}
+
+/* first flad displayed */
+.current-flag {
+  width: 20px;
+}
+
+/* Currency button */
+.currencySelector {
+  margin: 1rem 0;
+  padding: 0.4rem;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  color: royalblue;
+  background: transparent;
+  font-weight: bold;
+  border: none;
+}
