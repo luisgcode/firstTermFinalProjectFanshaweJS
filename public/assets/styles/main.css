@@ -1,3 +1,17 @@
+@import url(/public/assets/styles/typography.css);
+@import url(/public/assets/styles/utilities.css);
+@import url(/public/assets/styles/variables.css);
+@import url(/src/components/carrousel/carrousel.css);
+@import url(/src/components//footer/footer.css);
+@import url(/src/components/form/form.css);
+@import url(/src/components/header/header.css);
+@import url(/src/components/navigation/navigation.css);
+@import url(/src/pages/about/aboutPage.css);
+@import url(/src/pages/contact/contactPage.css);
+@import url(/src/pages/home/homePage.css);
+
+/* General styling ⬇️ */
+
 html {
   font-size: 62.5%;
   /* For using rem correclty 10px based */
@@ -24,22 +38,22 @@ p {
 }
 
 /*********************************************
-                MAIN WRAPP
-*********************************************/
+                  MAIN WRAPP
+  *********************************************/
 .wrapp {
   width: 97%;
   max-width: 1400px;
   margin: 5rem auto;
   /* display: flex;
-  flex-direction: column; */
+    flex-direction: column; */
   display: grid;
   grid-template-columns: 40% 60%;
   grid-gap: 2rem;
 }
 
 /*********************************************
-                wrapp-intro
-*********************************************/
+                  wrapp-intro
+  *********************************************/
 .wrapp-intro {
   display: flex;
   align-items: flex-end;
@@ -64,8 +78,8 @@ p {
 }
 
 /*********************************************
-               Products table
-*********************************************/
+                 Products table
+  *********************************************/
 /* Begin fieldset */
 fieldset {
   border-radius: 10px;
@@ -180,8 +194,8 @@ td {
 }
 
 /*********************************************
-           Select items section
-*********************************************/
+             Select items section
+  *********************************************/
 .itemSelector {
 }
 
@@ -225,8 +239,8 @@ td {
 }
 
 /*********************************************
-              Cart section
-*********************************************/
+                Cart section
+  *********************************************/
 /*********************************************
-              review section
-*********************************************/
+                review section
+  *********************************************/
