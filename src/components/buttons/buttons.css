@@ -9,3 +9,21 @@
   font-weight: bold;
   border: none;
 }
+
+/* regular buttons */
+.btn {
+  color: white;
+  background: royalblue;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  margin: 0 0.3rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  background-color: rgba(65, 105, 225, 0.842);
+}

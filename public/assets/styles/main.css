@@ -5,7 +5,7 @@
 @import url(/src/components/carrousel/carrousel.css);
 @import url(/src/components/form/form.css);
 @import url(/src/components/header/header.css);
-@import url(/src/components/navigation/navigation.css);
+@import url(/src/components/productSelector/productSelector.css);
 @import url(/src/components/productTable/productTable.css);
 @import url(/src/pages/about/aboutPage.css);
 @import url(/src/pages/contact/contactPage.css);
@@ -25,7 +25,7 @@ p {
   padding: 0;
 }
 
-/* General styles for all the fieldsets */
+/* General styles for fieldsets */
 fieldset {
   border-radius: 10px;
   border: none;
@@ -76,57 +76,7 @@ td {
   border: 1px solid black;
 }
 
-.product-name {
-  text-transform: uppercase;
-}
-
-.product-id {
-  font-weight: bold;
-}
-.product-price {
-  font-weight: bold;
-  min-width: 120px;
-}
-.product-descr {
-  font-size: 1.2rem;
-  max-width: 200px;
-  padding: 1rem;
-  text-align: justify;
-}
-.product-qty {
-  width: 110px;
-}
-.product-max {
-  /*  */
-}
-.product-cat {
-  text-transform: uppercase;
-}
-
-.product-photo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.product-image {
-  width: 60px;
-  border-radius: 50%;
-  border: 1px solid rgba(65, 105, 225, 0.318);
-  transition: all 0.3s ease;
-}
-
-.product-image:hover {
-  transform: scale(2) translateX(-20px);
-  cursor: pointer;
-}
-
-/*********************************************
-             Select items section
-  *********************************************/
-.itemSelector {
-}
-
+/* all the input rows */
 .input-row {
   margin: 0 1rem 2rem 1rem;
   display: flex;
@@ -148,27 +98,3 @@ td {
 .input-row span {
   position: absolute;
 }
-
-.btn {
-  color: white;
-  background: royalblue;
-  border: none;
-  outline: none;
-  border-radius: 5px;
-  padding: 0.5rem 1rem;
-  margin: 0 0.3rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.btn:hover {
-  background-color: rgba(65, 105, 225, 0.842);
-}
-
-/*********************************************
-                Cart section
-  *********************************************/
-/*********************************************
-                review section
-  *********************************************/
