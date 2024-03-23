@@ -108,11 +108,11 @@ const updateCurrency = function () {
   if (currencyOptions.value == "CAD") {
     currencyFactor = 1;
     moneySign = "CAD";
-    currentFlag.src = "/public/assets/images/canada.png";
+    currentFlag.src = "/assets/images/canada.png";
   } else if (currencyOptions.value == "CLP") {
     currencyFactor = 711.8;
     moneySign = "CLP";
-    currentFlag.src = "/public/assets/images/chile.png";
+    currentFlag.src = "/assets/images/chile.png";
   }
 
   function_display_items();
@@ -139,7 +139,7 @@ const loadPage = function () {
     null,
     null,
 
-    '<img class="product-image" src="/public/assets/images/car-seat-convertible-advocate.png" alt=" Sport number two" />'
+    '<img class="product-image" src="/assets/images/car-seat-convertible-advocate.png" alt=" Sport number two" />'
   );
 
   let car_seat_grow_and_go = new item_constructor(
@@ -153,7 +153,7 @@ const loadPage = function () {
     "car seat",
     null,
     null,
-    '<img class="product-image" src="/public/assets/images/car-seat-convertible-grow-and-go.png" alt=" Sport number two" />'
+    '<img class="product-image" src="/assets/images/car-seat-convertible-grow-and-go.png" alt=" Sport number two" />'
   );
 
   let criba_luna = new item_constructor(
@@ -167,7 +167,7 @@ const loadPage = function () {
     "crib",
     null,
     null,
-    '<img class="product-image" src="/public/assets/images/crib-luna.png" alt=" Sport number two" />'
+    '<img class="product-image" src="/assets/images/crib-luna.png" alt=" Sport number two" />'
   );
 
   let stroller_forest = new item_constructor(
@@ -181,7 +181,7 @@ const loadPage = function () {
     "Stroller",
     null,
     null,
-    '<img class="product-image" src="/public/assets/images/stroller-forest.png" alt=" Sport number two" />'
+    '<img class="product-image" src="/assets/images/stroller-forest.png" alt=" Sport number two" />'
   );
 
   let crib_essential = new item_constructor(
@@ -195,7 +195,7 @@ const loadPage = function () {
     "crib",
     null,
     null,
-    '<img class="product-image" src="/public/assets/images/crib-essential.png" alt=" Sport number two" />'
+    '<img class="product-image" src="/assets/images/crib-essential.png" alt=" Sport number two" />'
   );
 
   let car_seat_beryl = new item_constructor(
@@ -209,7 +209,7 @@ const loadPage = function () {
     "car seat",
     null,
     null,
-    '<img class="product-image" src="/public/assets/images/car-seat-convertible-beryl.png" alt=" Sport number two" />'
+    '<img class="product-image" src="/assets/images/car-seat-convertible-beryl.png" alt=" Sport number two" />'
   );
 
   let car_seat_giro = new item_constructor(
@@ -223,7 +223,7 @@ const loadPage = function () {
     "car seat",
     null,
     null,
-    '<img class="product-image" src="/public/assets/images/car-seat-convertible-i-giro.png" alt=" Sport number two" />'
+    '<img class="product-image" src="/assets/images/car-seat-convertible-i-giro.png" alt=" Sport number two" />'
   );
 
   let car_seat_one_4life = new item_constructor(
@@ -237,7 +237,7 @@ const loadPage = function () {
     "car seat",
     null,
     null,
-    '<img class="product-image" src="/public/assets/images/car-seat-convertible-one4life.png" alt=" Sport number two" />'
+    '<img class="product-image" src="/assets/images/car-seat-convertible-one4life.png" alt=" Sport number two" />'
   );
 
   let crib_alessia = new item_constructor(
@@ -251,7 +251,7 @@ const loadPage = function () {
     "crib",
     null,
     null,
-    '<img class="product-image" src="/public/assets/images/crib-alessia.png" alt=" Sport number two" />'
+    '<img class="product-image" src="/assets/images/crib-alessia.png" alt=" Sport number two" />'
   );
 
   let crib_beyond = new item_constructor(
@@ -265,7 +265,7 @@ const loadPage = function () {
     "crib",
     null,
     null,
-    '<img class="product-image" src="/public/assets/images/crib-beyond.png" alt=" Sport number two" />'
+    '<img class="product-image" src="/assets/images/crib-beyond.png" alt=" Sport number two" />'
   );
 
   let crib_dream = new item_constructor(
@@ -279,7 +279,7 @@ const loadPage = function () {
     "crib",
     null,
     null,
-    '<img class="product-image" src="/public/assets/images/crib-dream.png" alt=" Sport number two" />'
+    '<img class="product-image" src="/assets/images/crib-dream.png" alt=" Sport number two" />'
   );
 
   let stroller_epic = new item_constructor(
@@ -293,7 +293,7 @@ const loadPage = function () {
     "stroller",
     null,
     null,
-    '<img class="product-image" src="/public/assets/images/stroller-epic.png" alt=" Sport number two" />'
+    '<img class="product-image" src="/assets/images/stroller-epic.png" alt=" Sport number two" />'
   );
 
   let stroller_spark = new item_constructor(
@@ -307,7 +307,7 @@ const loadPage = function () {
     "stroller",
     null,
     null,
-    '<img class="product-image" src="/public/assets/images/stroller-spark.png" alt=" Sport number two" />'
+    '<img class="product-image" src="/assets/images/stroller-spark.png" alt=" Sport number two" />'
   );
 
   let stroller_francis = new item_constructor(
@@ -321,7 +321,7 @@ const loadPage = function () {
     "stroller",
     null,
     null,
-    '<img class="product-image" src="/public/assets/images/stroller-francis.png" alt=" Sport number two" />'
+    '<img class="product-image" src="/assets/images/stroller-francis.png" alt=" Sport number two" />'
   );
 
   let stroller_essential = new item_constructor(
@@ -335,7 +335,7 @@ const loadPage = function () {
     "stroller",
     null,
     null,
-    '<img class="product-image" src="/public/assets/images/stroller-essential.png" alt=" Sport number two" />'
+    '<img class="product-image" src="/assets/images/stroller-essential.png" alt=" Sport number two" />'
   );
 
   array_of_store_items.push(
