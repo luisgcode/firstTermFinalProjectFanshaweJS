@@ -20,8 +20,8 @@ const remove_from_cart_btn = document.querySelector(".btnremoveItem");
 // Just to display CAD or CLP
 let moneySign = "";
 // The arrays to insert each value (product)
-const array_of_store_items = [];
-const array_of_cart_items = [];
+// const array_of_store_items = [];
+// const array_of_cart_items = [];
 
 const cart_output = document.querySelector("#cartOutput");
 const cart_checkout = document.querySelector("#cartCheckout");
@@ -103,20 +103,20 @@ filterCategory.addEventListener("change", function () {
   function_display_items(filteredProducts);
 });
 
-// Function to update the currency
-const updateCurrency = function () {
-  if (currencyOptions.value == "CAD") {
-    currencyFactor = 1;
-    moneySign = "CAD";
-    currentFlag.src = "/assets/images/canada.png";
-  } else if (currencyOptions.value == "CLP") {
-    currencyFactor = 711.8;
-    moneySign = "CLP";
-    currentFlag.src = "/assets/images/chile.png";
-  }
+// // Function to update the currency
+// const updateCurrency = function () {
+//   if (currencyOptions.value == "CAD") {
+//     currencyFactor = 1;
+//     moneySign = "CAD";
+//     currentFlag.src = "/assets/images/canada.png";
+//   } else if (currencyOptions.value == "CLP") {
+//     currencyFactor = 711.8;
+//     moneySign = "CLP";
+//     currentFlag.src = "/assets/images/chile.png";
+//   }
 
-  function_display_items();
-};
+//   function_display_items();
+// };
 
 // Original function load
 const loadPage = function () {
