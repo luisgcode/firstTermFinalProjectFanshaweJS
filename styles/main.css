@@ -1,15 +1,5 @@
-@import url(/public/assets/styles/typography.css);
-@import url(/public/assets/styles/utilities.css);
-@import url(/public/assets/styles/variables.css);
-@import url(/src/components/buttons/buttons.css);
-@import url(/src/components/carrousel/carrousel.css);
-@import url(/src/components/form/form.css);
-@import url(/src/components/header/header.css);
-@import url(/src/components/productSelector/productSelector.css);
-@import url(/src/components/productTable/productTable.css);
-@import url(/src/pages/about/aboutPage.css);
-@import url(/src/pages/contact/contactPage.css);
-@import url(/src/pages/home/homePage.css);
+@import url(/styles/base/typography.css);
+@import url(/styles/base/variables.css);
 
 /* General styling ⬇️ */
 
@@ -23,6 +13,40 @@ figure,
 p {
   margin: 0;
   padding: 0;
+}
+
+.wrapp {
+  width: 97%;
+  max-width: 1400px;
+  margin: 5rem auto;
+  display: grid;
+  grid-template-columns: 40% 60%;
+  grid-gap: 2rem;
+}
+
+.wrapp-intro {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  grid-column: 1/-1;
+  grid-row: 1/2;
+}
+
+/* first flad displayed */
+.current-flag {
+  width: 20px;
+}
+
+/* Currency button */
+.currencySelector {
+  margin: 1rem 0;
+  padding: 0.4rem;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  color: royalblue;
+  background: transparent;
+  font-weight: bold;
+  border: none;
 }
 
 /* General styles for fieldsets */
@@ -97,4 +121,86 @@ td {
 
 .input-row span {
   position: absolute;
+}
+
+/* product table specifically */
+.orderSection {
+  grid-column: 1/-1;
+  grid-row: 2/3;
+}
+
+.product-name {
+  text-transform: uppercase;
+}
+
+.product-id {
+  font-weight: bold;
+}
+
+.product-price {
+  font-weight: bold;
+  min-width: 120px;
+}
+
+.product-descr {
+  font-size: 1.2rem;
+  max-width: 200px;
+  padding: 1rem;
+  text-align: justify;
+}
+
+.product-qty {
+  width: 110px;
+}
+
+.product-cat {
+  text-transform: uppercase;
+}
+
+.product-photo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-image {
+  width: 60px;
+  border-radius: 50%;
+  border: 1px solid rgba(65, 105, 225, 0.318);
+  transition: all 0.3s ease;
+}
+
+.product-image:hover {
+  transform: scale(2) translateX(-20px);
+  cursor: pointer;
+}
+
+/* Display filter button */
+.displayFilter {
+  margin: 1rem 0;
+  padding: 0.8rem;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  background: #f4f6fa;
+  color: royalblue;
+  font-weight: bold;
+  border: none;
+}
+
+/* regular buttons */
+.btn {
+  color: white;
+  background: royalblue;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  margin: 0 0.3rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  background-color: rgba(65, 105, 225, 0.842);
 }
