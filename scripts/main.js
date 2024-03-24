@@ -8,7 +8,7 @@ function Store_item(
   qty_available,
   max_qty_allowed,
   category_store_item,
-  shipping_cost,
+  shipping_cost, // Make sure shipping_cost is included in the constructor parameters
   reviews_store_item,
   image_store_item
 ) {
@@ -19,11 +19,10 @@ function Store_item(
   this.qty_available = qty_available;
   this.max_qty_allowed = max_qty_allowed;
   this.category_store_item = category_store_item;
-  this.shipping_cost = shipping_cost;
+  this.shipping_cost = shipping_cost; // Assign the shipping_cost property
   this.reviews_store_item = reviews_store_item;
   this.image_store_item = image_store_item;
 }
-
 function Cart_item(
   id_cart_item,
   name_cart_item,
@@ -43,28 +42,16 @@ function Review_item(review_item, rating_item) {
   this.rating_item = rating_item;
 }
 
-// the button to select the category
 let filterCategory = document.querySelector(".displayFilter");
-// the button to select the currency
 let currencyOptions = document.querySelector(".currencySelector");
-// Just a variable wrapper to display the timer
 const screenDate = document.querySelector(".wrapp-intro-time");
-// The HTML container which displayed the products inside of it
 let productsWrapper = document.querySelector(".productsWrapper");
-// Currency factor to multiply and change the currency values
 let currencyFactor = 1;
-// Currency flag
 let currentFlag = document.querySelector(".current-flag");
-// Button to add to the cart
 const add_to_cart_btn = document.querySelector(".btnAddItem");
-// Button to remove from the cart
 const remove_from_cart_btn = document.querySelector(".btnremoveItem");
-
-// Inicialización de arrays
 let store_item_array = [];
 let cart_item_array = [];
-
-// Just to display CAD or CLP
 let moneySign = "CAD";
 
 const cart_output = document.querySelector("#cartOutput");
@@ -72,11 +59,11 @@ const cart_checkout = document.querySelector("#cartCheckout");
 
 // Defining currency and flags
 const updateCurrency = function () {
-  if (currencyOptions.value == "CAD") {
+  if (currencyOptions.value === "CAD") {
     currencyFactor = 1;
     moneySign = "CAD";
     currentFlag.src = "/assets/images/canada.png";
-  } else if (currencyOptions.value == "CLP") {
+  } else if (currencyOptions.value === "CLP") {
     currencyFactor = 711.8;
     moneySign = "CLP";
     currentFlag.src = "/assets/images/chile.png";
@@ -91,7 +78,6 @@ const displayStoreItems = function (products) {
   productsGrid.innerHTML = "";
 
   products.forEach((item) => {
-    // Formatting the price
     let formattedPrice = (
       item.price_store_item * currencyFactor
     ).toLocaleString(undefined, {
@@ -119,7 +105,7 @@ const displayStoreItems = function (products) {
 // displaying car items
 const displayCartItems = function (cartItems) {
   const cartContainer = document.querySelector(".cartContainer");
-  cartContainer.innerHTML = ""; // Limpiar el contenedor del carrito
+  cartContainer.innerHTML = "";
 
   if (cartItems.length === 0) {
     cartContainer.innerHTML = "<p>No items in cart</p>";
@@ -148,7 +134,7 @@ const displayCartItems = function (cartItems) {
     row.innerHTML = `
       <td>${item.id_cart_item}</td>
       <td>${item.name_cart_item}</td>
-      <td>$${item.price_cart_item}</td>
+      <td>$${item.price_cart_item.toFixed(2)}</td>
       <td>${item.qty_cart_item}</td>
       <td>$${subtotal.toFixed(2)}</td>
     `;
@@ -162,45 +148,43 @@ const displayCartItems = function (cartItems) {
 filterCategory.addEventListener("change", function () {
   const selectedCategory = filterCategory.value.toLowerCase().trim();
 
-  // Filtra los productos basados en la categoría seleccionada
   const filteredProducts = store_item_array.filter(function (product) {
     const productCategory = product.category_store_item.toLowerCase().trim();
     return selectedCategory === "all" || productCategory === selectedCategory;
   });
 
-  // Muestra los productos filtrados en la página
   displayStoreItems(filteredProducts);
 });
 
 // Función para agregar un elemento al carrito
+
 const addToCart = function () {
   const productIdInput = document.getElementById("addItemId");
   const quantityInput = document.getElementById("addItemQty");
 
-  // Obtener el ID del producto y la cantidad como enteros
   const productId = productIdInput.value;
   const quantityToAdd = parseInt(quantityInput.value);
 
-  // Buscar el producto en la lista de productos de la tienda
   const product = store_item_array.find(
     (item) => item.id_store_item === productId
   );
 
-  // Verificar si el producto existe y la cantidad es válida
   if (product && quantityToAdd > 0) {
-    // Limitar la cantidad a agregar al máximo permitido
     const quantityToAddLimited = Math.min(
       quantityToAdd,
       product.max_qty_allowed
     );
 
-    // Verificar si el producto ya está en el carrito
+    if (quantityToAdd > product.max_qty_allowed) {
+      alert("You have reached the maximum quantity allowed for this product.");
+      return; // Exit the function early
+    }
+
     const existingCartItem = cart_item_array.find(
       (item) => item.id_cart_item === productId
     );
 
     if (existingCartItem) {
-      // Si el producto ya está en el carrito, actualizar la cantidad si no supera el máximo por cliente
       const newQuantity = existingCartItem.qty_cart_item + quantityToAddLimited;
       const maxQtyAllowed = product.max_qty_allowed;
 
@@ -210,7 +194,6 @@ const addToCart = function () {
         existingCartItem.qty_cart_item = maxQtyAllowed;
       }
     } else {
-      // Si el producto no está en el carrito, agregarlo al carrito
       const cartItem = new Cart_item(
         product.id_store_item,
         product.name_store_item,
@@ -220,33 +203,231 @@ const addToCart = function () {
       );
       cart_item_array.push(cartItem);
 
-      // Actualizar la cantidad disponible del producto solo si se agregó al carrito
       product.qty_available -= quantityToAddLimited;
     }
 
-    // Actualizar la visualización del carrito
     displayCartItems(cart_item_array);
-    // Calcular precios del carrito
     calculateCartPricing();
-
-    // Mostrar los productos de la tienda actualizados
     displayStoreItems(store_item_array);
+    calculateCartTotals();
   } else {
     console.log("Invalid product ID or quantity.");
   }
 };
 
+// Remove from cart
+const removeFromCart = function (productId) {
+  const index = cart_item_array.findIndex(
+    (item) => item.id_cart_item === productId
+  );
+
+  if (index !== -1) {
+    cart_item_array[index].qty_cart_item--;
+
+    // Restaurar la cantidad disponible en el inventario
+    const product = store_item_array.find(
+      (item) => item.id_store_item === productId
+    );
+    if (product) {
+      product.qty_available++;
+    }
+
+    if (cart_item_array[index].qty_cart_item <= 0) {
+      cart_item_array.splice(index, 1);
+    }
+
+    displayCartItems(cart_item_array);
+    calculateCartPricing();
+    calculateCartTotals();
+  }
+};
+
+remove_from_cart_btn.addEventListener("click", function () {
+  const productIdInput = document.getElementById("addItemId");
+  const productId = productIdInput.value.trim();
+
+  removeFromCart(productId);
+});
+
 // Función para calcular el precio total del carrito
 const calculateCartPricing = function () {
-  // Calcular el precio total de todos los elementos en el carrito
   const total = cart_item_array.reduce(
     (accumulator, item) =>
       accumulator + item.price_cart_item * item.qty_cart_item,
     0
   );
 
-  // Mostrar el precio total en el carrito
   cart_output.textContent = total.toFixed(2);
+};
+
+// Función para mostrar los detalles de un artículo
+const displayItemDetails = function (productId) {
+  const product = store_item_array.find(
+    (item) => item.id_store_item === productId
+  );
+
+  if (product) {
+    const {
+      id_store_item,
+      name_store_item,
+      price_store_item,
+      description_store_item,
+      qty_available,
+      max_qty_allowed,
+      category_store_item,
+      shipping_cost,
+      reviews_store_item,
+    } = product;
+
+    let averageRating = 0;
+    if (reviews_store_item && reviews_store_item.length > 0) {
+      const totalRating = reviews_store_item.reduce(
+        (accumulator, review) => accumulator + review.rating_item,
+        0
+      );
+      averageRating = totalRating / reviews_store_item.length;
+    }
+
+    let alertMessage = `
+      Product ID: ${id_store_item}
+      Name: ${name_store_item}
+      Price: $${price_store_item.toFixed(2)}
+      Description: ${description_store_item}
+      Quantity Available: ${qty_available}
+      Max Quantity Allowed: ${max_qty_allowed}
+      Category: ${category_store_item}
+    `;
+
+    if (shipping_cost !== null && shipping_cost !== undefined) {
+      alertMessage += `
+        Shipping Cost: $${shipping_cost.toFixed(2)}
+      `;
+    } else {
+      alertMessage += `
+        Shipping Cost: Not specified
+      `;
+    }
+
+    if (reviews_store_item && reviews_store_item.length > 0) {
+      alertMessage += `
+        \nReviews:
+      `;
+      reviews_store_item.forEach((review) => {
+        alertMessage += `
+          - ${review.review_item}
+        `;
+      });
+      alertMessage += `
+        Average Rating: ${averageRating.toFixed(2)}/5
+      `;
+    } else {
+      alertMessage += `
+        \nNo reviews available yet.
+      `;
+    }
+
+    alert(alertMessage);
+  } else {
+    alert("Product not found. Please enter a valid product ID.");
+  }
+};
+
+// Función para calcular el precio total del carrito
+const calculateCartTotals = function () {
+  // Calcula el subtotal de los items en el carrito
+  const subtotalItems = cart_item_array.reduce(
+    (acc, item) => acc + item.price_cart_item * item.qty_cart_item,
+    0
+  );
+
+  // Calcula el costo total de envío sumando el envío de cada item en el carrito
+  const shippingCost = cart_item_array.reduce(
+    (acc, item) => acc + item.shipping_cart_item * item.qty_cart_item,
+    0
+  );
+
+  // Calcula el subtotal total (subtotal de los items + costo total de envío)
+  const totalSubtotal = subtotalItems + shippingCost;
+
+  // Calcula el impuesto aplicando un 13% al subtotal total
+  const tax = totalSubtotal * 0.13;
+
+  // Calcula el gran total (subtotal total + impuesto)
+  const total = totalSubtotal + tax;
+
+  // Muestra los resultados en los elementos HTML correspondientes
+  cart_output.innerHTML = `
+    Items Subtotal: ${formatCurrency(subtotalItems)} <br />
+    Estimated Shipping: ${formatCurrency(shippingCost)}
+  `;
+
+  cart_checkout.innerHTML = `
+    Subtotal: ${formatCurrency(totalSubtotal)} <br />
+    Estimated Tax: ${formatCurrency(tax)} <br />
+    Order Total: ${formatCurrency(total)}
+  `;
+};
+
+// Función para formatear el precio con la moneda seleccionada
+const formatCurrency = function (amount) {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: currencyOptions.value,
+  }).format(amount);
+};
+
+// Llamada a la función calculateCartTotals para mostrar los totales al cargar la página
+calculateCartTotals();
+
+// Event listener para el botón de detalles del artículo
+const btnDetails = document.querySelector(".btnDetails");
+btnDetails.addEventListener("click", function () {
+  const productIdInput = document.getElementById("addItemId");
+  const productId = productIdInput.value.trim();
+
+  // Mostrar los detalles del artículo
+  displayItemDetails(productId);
+});
+
+// Función para agregar una reseña
+const submitReview = function () {
+  const productIdInput = document.getElementById("reviewId");
+  const reviewInput = document.getElementById("reviewDesc");
+  const ratingInput = document.getElementById("reviewNum");
+
+  // Verificar que los elementos del formulario existan y no sean nulos
+  if (productIdInput && reviewInput && ratingInput) {
+    const productId = productIdInput.value.trim();
+    const review = reviewInput.value.trim();
+    const rating = parseInt(ratingInput.value);
+
+    if (productId && review && !isNaN(rating) && rating >= 1 && rating <= 5) {
+      const product = store_item_array.find(
+        (item) => item.id_store_item === productId
+      );
+
+      if (product) {
+        const newReview = new Review_item(review, rating);
+        if (!product.reviews_store_item) {
+          product.reviews_store_item = []; // Inicializar el array si es null
+        }
+        product.reviews_store_item.push(newReview);
+
+        // Limpiar los campos del formulario después de agregar la reseña
+        productIdInput.value = "";
+        reviewInput.value = "";
+        ratingInput.value = "";
+
+        displayItemDetails(productId);
+      } else {
+        alert("Product not found. Please enter a valid product ID.");
+      }
+    } else {
+      alert("Please enter valid values for all fields.");
+    }
+  } else {
+    console.error("One or more form elements are missing.");
+  }
 };
 
 // Original function
@@ -265,7 +446,7 @@ const loadPage = function () {
     115,
     3,
     "Car Seat",
-    null,
+    1,
     null,
     '<img class="product-image" src="/assets/images/car-seat-convertible-advocate.png" alt=" Sport number two" />'
   );
@@ -278,7 +459,7 @@ const loadPage = function () {
     472,
     10,
     "Stroller",
-    null,
+    4,
     null,
     '<img class="product-image" src="/assets/images/car-seat-convertible-advocate.png" alt=" Sport number two" />'
   );
@@ -291,7 +472,7 @@ const loadPage = function () {
     1115,
     3,
     "crib",
-    null,
+    3,
     null,
     '<img class="product-image" src="/assets/images/crib-luna.png" alt=" Sport number two" />'
   );
@@ -304,7 +485,7 @@ const loadPage = function () {
     472,
     10,
     "Stroller",
-    null,
+    2,
     null,
     '<img class="product-image" src="/assets/images/stroller-forest.png" alt=" Sport number two" />'
   );
@@ -317,7 +498,7 @@ const loadPage = function () {
     79,
     5,
     "crib",
-    null,
+    1,
     null,
     '<img class="product-image" src="/assets/images/crib-essential.png" alt=" Sport number two" />'
   );
@@ -330,7 +511,7 @@ const loadPage = function () {
     112,
     10,
     "car seat",
-    null,
+    4,
     null,
     '<img class="product-image" src="/assets/images/car-seat-convertible-beryl.png" alt=" Sport number two" />'
   );
@@ -343,7 +524,7 @@ const loadPage = function () {
     112,
     10,
     "car seat",
-    null,
+    32,
     null,
     '<img class="product-image" src="/assets/images/car-seat-convertible-i-giro.png" alt=" Sport number two" />'
   );
@@ -356,7 +537,7 @@ const loadPage = function () {
     112,
     10,
     "car seat",
-    null,
+    5,
     null,
     '<img class="product-image" src="/assets/images/car-seat-convertible-one4life.png" alt=" Sport number two" />'
   );
@@ -369,7 +550,7 @@ const loadPage = function () {
     112,
     10,
     "crib",
-    null,
+    14,
     null,
     '<img class="product-image" src="/assets/images/crib-alessia.png" alt=" Sport number two" />'
   );
@@ -382,7 +563,7 @@ const loadPage = function () {
     112,
     10,
     "crib",
-    null,
+    45,
     null,
     '<img class="product-image" src="/assets/images/crib-beyond.png" alt=" Sport number two" />'
   );
@@ -395,7 +576,7 @@ const loadPage = function () {
     112,
     10,
     "crib",
-    null,
+    7,
     null,
     '<img class="product-image" src="/assets/images/crib-dream.png" alt=" Sport number two" />'
   );
@@ -408,7 +589,7 @@ const loadPage = function () {
     112,
     10,
     "stroller",
-    null,
+    2,
     null,
     '<img class="product-image" src="/assets/images/stroller-epic.png" alt=" Sport number two" />'
   );
@@ -421,7 +602,7 @@ const loadPage = function () {
     112,
     10,
     "stroller",
-    null,
+    10,
     null,
     '<img class="product-image" src="/assets/images/stroller-spark.png" alt=" Sport number two" />'
   );
@@ -434,7 +615,7 @@ const loadPage = function () {
     112,
     10,
     "stroller",
-    null,
+    11,
     null,
     '<img class="product-image" src="/assets/images/stroller-francis.png" alt=" Sport number two" />'
   );
@@ -447,7 +628,7 @@ const loadPage = function () {
     112,
     10,
     "stroller",
-    null,
+    21,
     null,
     '<img class="product-image" src="/assets/images/stroller-essential.png" alt=" Sport number two" />'
   );
@@ -480,6 +661,14 @@ const loadPage = function () {
   updateCurrency();
 
   add_to_cart_btn.addEventListener("click", addToCart);
+
+  // Agregar el event listener al botón de submit review
+  const submitReviewBtn = document.querySelector(".reviewSection .btn");
+  submitReviewBtn.addEventListener("click", submitReview);
 };
+
+document.addEventListener("DOMContentLoaded", loadPage);
+
+document.addEventListener("DOMContentLoaded", calculateCartTotals);
 
 document.addEventListener("DOMContentLoaded", loadPage);
