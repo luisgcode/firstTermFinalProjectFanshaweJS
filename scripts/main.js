@@ -57,6 +57,11 @@ let moneySign = "CAD";
 const cart_output = document.querySelector("#cartOutput");
 const cart_checkout = document.querySelector("#cartCheckout");
 
+// Function to validate Item ID existence
+const validateItemId = (productId) => {
+  return store_item_array.some((item) => item.id_store_item === productId);
+};
+
 // Defining currency and flags
 const updateCurrency = function () {
   if (currencyOptions.value === "CAD") {
@@ -157,13 +162,34 @@ filterCategory.addEventListener("change", function () {
 });
 
 // Función para agregar un elemento al carrito
-
 const addToCart = function () {
   const productIdInput = document.getElementById("addItemId");
   const quantityInput = document.getElementById("addItemQty");
 
-  const productId = productIdInput.value;
+  const productId = productIdInput.value.trim();
   const quantityToAdd = parseInt(quantityInput.value);
+
+  // Validate Item ID
+  if (!productId) {
+    alert("Please enter an Item ID.");
+    return;
+  }
+
+  if (!validateItemId(productId)) {
+    alert("Item ID does not exist in the inventory.");
+    return;
+  }
+
+  // Validate Item Quantity
+  if (quantityToAdd < 1) {
+    alert("Quantity must be at least 1.");
+    return;
+  }
+
+  if (!validateItemQuantity(productId, quantityToAdd)) {
+    alert("Invalid quantity or exceeding the maximum allowed quantity.");
+    return;
+  }
 
   const product = store_item_array.find(
     (item) => item.id_store_item === productId
@@ -174,11 +200,6 @@ const addToCart = function () {
       quantityToAdd,
       product.max_qty_allowed
     );
-
-    if (quantityToAdd > product.max_qty_allowed) {
-      alert("You have reached the maximum quantity allowed for this product.");
-      return; // Exit the function early
-    }
 
     const existingCartItem = cart_item_array.find(
       (item) => item.id_cart_item === productId
@@ -191,7 +212,16 @@ const addToCart = function () {
       if (newQuantity <= maxQtyAllowed) {
         existingCartItem.qty_cart_item = newQuantity;
       } else {
+        // Adjust quantity to the maximum allowed
         existingCartItem.qty_cart_item = maxQtyAllowed;
+
+        // Update quantity available in inventory
+        product.qty_available += quantityToAddLimited - maxQtyAllowed;
+
+        // Show alert indicating maximum allowed quantity reached
+        alert(
+          "You have reached the maximum quantity allowed for this product."
+        );
       }
     } else {
       const cartItem = new Cart_item(
@@ -201,10 +231,12 @@ const addToCart = function () {
         quantityToAddLimited,
         product.shipping_cost
       );
-      cart_item_array.push(cartItem);
 
-      product.qty_available -= quantityToAddLimited;
+      cart_item_array.push(cartItem);
     }
+
+    // Update quantity available in inventory
+    product.qty_available -= quantityToAddLimited;
 
     displayCartItems(cart_item_array);
     calculateCartPricing();
@@ -216,15 +248,27 @@ const addToCart = function () {
 };
 
 // Remove from cart
+
+// Remove from cart
+// Remove from cart
 const removeFromCart = function (productId) {
   const index = cart_item_array.findIndex(
     (item) => item.id_cart_item === productId
   );
 
   if (index !== -1) {
+    const currentQuantity = cart_item_array[index].qty_cart_item;
+
+    // Validate if the current quantity is greater than 0
+    if (currentQuantity <= 0) {
+      // Show alert indicating that removing 0 quantity is not allowed
+      alert("Removing 0 quantity is not allowed.");
+      return;
+    }
+
     cart_item_array[index].qty_cart_item--;
 
-    // Restaurar la cantidad disponible en el inventario
+    // Restore the available quantity in the inventory
     const product = store_item_array.find(
       (item) => item.id_store_item === productId
     );
@@ -239,12 +283,23 @@ const removeFromCart = function (productId) {
     displayCartItems(cart_item_array);
     calculateCartPricing();
     calculateCartTotals();
+  } else {
+    alert("Product not found in cart.");
   }
 };
 
 remove_from_cart_btn.addEventListener("click", function () {
   const productIdInput = document.getElementById("addItemId");
   const productId = productIdInput.value.trim();
+
+  // Validate if quantity is greater than 0
+  const quantityInput = document.getElementById("addItemQty");
+  const quantity = parseInt(quantityInput.value);
+
+  if (quantity <= 0) {
+    alert("Quantity must be greater than 0.");
+    return;
+  }
 
   removeFromCart(productId);
 });
@@ -430,6 +485,23 @@ const submitReview = function () {
   }
 };
 
+// Function to validate Item Quantity
+const validateItemQuantity = (productId, quantity) => {
+  const product = store_item_array.find(
+    (item) => item.id_store_item === productId
+  );
+  if (
+    product &&
+    quantity >= 1 &&
+    quantity <= product.qty_available &&
+    quantity <= product.max_qty_allowed
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
 // Original function
 const loadPage = function () {
   screenDate.innerHTML = new Date();
@@ -442,7 +514,7 @@ const loadPage = function () {
     "001",
     "Car Seat Advocate",
     345,
-    "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
+    "The Car Seat Advocate offers top-tier comfort and safety features, ensuring a secure ride for your little one",
     115,
     3,
     "Car Seat",
@@ -455,7 +527,7 @@ const loadPage = function () {
     "002",
     "Stroller Grow and Go",
     231.34,
-    "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
+    "The Stroller Grow and Go is a versatile companion, adapting effortlessly to your child's growth and various travel needs",
     472,
     10,
     "Stroller",
@@ -468,7 +540,7 @@ const loadPage = function () {
     "003",
     "crib luna",
     987.13,
-    " Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi in voluptatibus, qui optio maxime ea dolorum mollitia quisquam voluptas culpa ducimus ratione eligendi?",
+    "The Crib Luna combines style and durability, providing a cozy and secure environment for your baby's sleep",
     1115,
     3,
     "crib",
@@ -481,7 +553,7 @@ const loadPage = function () {
     "004",
     "stroller forest",
     222.99,
-    " Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi in voluptatibus, qui optio maxime ea dolorum mollitia quisquam voluptas culpa ducimus ratione eligendi?",
+    "The Stroller Forest is a rugged yet lightweight choice, perfect for outdoor excursions and urban adventures alike",
     472,
     10,
     "Stroller",
@@ -494,7 +566,7 @@ const loadPage = function () {
     "005",
     "crib essential",
     342,
-    " Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi in voluptatibus, qui optio maxime ea dolorum mollitia quisquam voluptas culpa ducimus ratione eligendi?",
+    "The Crib Essential is a simple yet elegant crib, designed with your baby's comfort and safety in mind",
     79,
     5,
     "crib",
@@ -507,7 +579,7 @@ const loadPage = function () {
     "006",
     "car seat beryl",
     897.5,
-    " Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi in voluptatibus, qui optio maxime ea dolorum mollitia quisquam voluptas culpa ducimus ratione eligendi?",
+    "The Car Seat Beryl is a modern marvel, boasting advanced features and adjustable options for a customized fit.",
     112,
     10,
     "car seat",
@@ -520,7 +592,7 @@ const loadPage = function () {
     "007",
     "car seat i-giro",
     897.5,
-    " Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi in voluptatibus, qui optio maxime ea dolorum mollitia quisquam voluptas culpa ducimus ratione eligendi?",
+    "The Car Seat I-Giro revolutionizes convenience with its 360-degree rotation, offering effortless access and safety",
     112,
     10,
     "car seat",
@@ -533,7 +605,7 @@ const loadPage = function () {
     "008",
     "car seat one4life",
     897.5,
-    " Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi in voluptatibus, qui optio maxime ea dolorum mollitia quisquam voluptas culpa ducimus ratione eligendi?",
+    "The Car Seat One4Life grows with your child, providing long-lasting comfort and security throughout their development",
     112,
     10,
     "car seat",
@@ -546,7 +618,7 @@ const loadPage = function () {
     "009",
     "crib alessia",
     897.5,
-    " Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi in voluptatibus, qui optio maxime ea dolorum mollitia quisquam voluptas culpa ducimus ratione eligendi?",
+    "The Crib Alessia is a classic choice, combining timeless design with practicality for a cozy nursery setting",
     112,
     10,
     "crib",
@@ -559,7 +631,7 @@ const loadPage = function () {
     "0010",
     "crib beyond",
     397.5,
-    " Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi in voluptatibus, qui optio maxime ea dolorum mollitia quisquam voluptas culpa ducimus ratione eligendi?",
+    "The Crib Beyond offers versatility and storage solutions, ensuring functionality and convenience for busy parents.",
     112,
     10,
     "crib",
@@ -572,7 +644,7 @@ const loadPage = function () {
     "0011",
     "crib dream",
     497.5,
-    " Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi in voluptatibus, qui optio maxime ea dolorum mollitia quisquam voluptas culpa ducimus ratione eligendi?",
+    "The Crib Dream is a dreamy sanctuary, providing a peaceful sleep environment with its comfortable and secure design",
     112,
     10,
     "crib",
@@ -585,7 +657,7 @@ const loadPage = function () {
     "0012",
     "stroller epic",
     197.5,
-    " Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi in voluptatibus, qui optio maxime ea dolorum mollitia quisquam voluptas culpa ducimus ratione eligendi?",
+    "The Stroller Epic blends style and functionality, making it the ideal choice for navigating city streets with ease.",
     112,
     10,
     "stroller",
@@ -598,7 +670,7 @@ const loadPage = function () {
     "0013",
     "stroller spark",
     797.5,
-    " Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi in voluptatibus, qui optio maxime ea dolorum mollitia quisquam voluptas culpa ducimus ratione eligendi?",
+    "The Stroller Spark is a lightweight and compact companion, perfect for on-the-go families and travel enthusiasts",
     112,
     10,
     "stroller",
@@ -611,7 +683,7 @@ const loadPage = function () {
     "0014",
     "stroller francis",
     397.5,
-    " Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi in voluptatibus, qui optio maxime ea dolorum mollitia quisquam voluptas culpa ducimus ratione eligendi?",
+    "The Stroller Francis combines sleek design with maneuverability, offering a smooth and comfortable ride for your child.",
     112,
     10,
     "stroller",
@@ -624,7 +696,7 @@ const loadPage = function () {
     "0015",
     "stroller essential",
     1197.5,
-    " Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi in voluptatibus, qui optio maxime ea dolorum mollitia quisquam voluptas culpa ducimus ratione eligendi?",
+    "The Stroller Essential is a must-have for busy parents, featuring comfort and convenience for everyday outings.",
     112,
     10,
     "stroller",
