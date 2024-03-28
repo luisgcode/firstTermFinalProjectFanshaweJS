@@ -4,7 +4,7 @@
 /* General styling ⬇️ */
 
 body {
-  background: #f4f6fa;
+  background: #7f96fb18;
 }
 
 ul,
@@ -13,6 +13,14 @@ figure,
 p {
   margin: 0;
   padding: 0;
+}
+
+header {
+  background-color: rgba(9, 91, 142, 0.56);
+  text-align: center;
+  color: white;
+  padding: 2rem 0;
+  border-radius: 0 0 15px 15px;
 }
 
 .wrapp {
@@ -32,6 +40,10 @@ p {
   grid-row: 1/2;
 }
 
+.wrapp-intro-time {
+  font-size: 2rem;
+}
+
 /* first flad displayed */
 .current-flag {
   width: 20px;
@@ -41,19 +53,20 @@ p {
 .currencySelector {
   margin: 1rem 0;
   padding: 0.4rem;
-  font-size: 1.2rem;
+  font-size: 2rem;
   border-radius: 5px;
-  color: royalblue;
+  color: rgb(9, 91, 142);
   background: transparent;
   font-weight: bold;
   border: none;
+  text-decoration: underline;
 }
 
 /* General styles for fieldsets */
 fieldset {
   border-radius: 10px;
   border: none;
-  background: white;
+  background: rgba(255, 255, 255, 0.688);
   padding: 2rem;
   box-shadow: 5px 5px 25px rgba(0, 0, 0, 0.163);
   margin: 2rem 0;
@@ -63,8 +76,8 @@ legend {
   font-size: 2.3rem;
   background: white;
   border-radius: 10px;
-  padding: 0.5rem 3rem;
-  color: royalblue;
+  padding: 1.5rem 3rem;
+  color: rgb(9, 91, 142);
   letter-spacing: 2px;
   position: relative;
 }
@@ -76,7 +89,7 @@ legend::after {
   border-radius: 15px;
   width: 20%;
   background: royalblue;
-  bottom: 1px;
+  bottom: 10px;
   left: 22%;
   transform: translate(-50%);
 }
@@ -116,7 +129,7 @@ td {
   padding: 0.5rem;
   border-radius: 3px;
   border: none;
-  background: #f4f6fa;
+  background: #7f96fb18;
 }
 
 .input-row span {
