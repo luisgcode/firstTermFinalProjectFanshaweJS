@@ -1,5 +1,23 @@
 "use strict";
+// Const variables
+const cart_output = document.querySelector("#cartOutput");
+const cart_checkout = document.querySelector("#cartCheckout");
+const add_to_cart_btn = document.querySelector(".btnAddItem");
+const remove_from_cart_btn = document.querySelector(".btnremoveItem");
+const screenDate = document.querySelector(".wrapp-intro-time");
+// Let variables
+let currentFlag = document.querySelector(".current-flag");
+let moneySign = "CAD";
+let currencyFactor = 1;
+let productsWrapper = document.querySelector(".productsWrapper");
+let filterCategory = document.querySelector(".displayFilter");
+let currencyOptions = document.querySelector(".currencySelector");
 
+// Empty arrays to insert the products later
+let store_item_array = [];
+let cart_item_array = [];
+
+// Main constructors
 function Store_item(
   id_store_item,
   name_store_item,
@@ -8,7 +26,7 @@ function Store_item(
   qty_available,
   max_qty_allowed,
   category_store_item,
-  shipping_cost, // Make sure shipping_cost is included in the constructor parameters
+  shipping_cost,
   reviews_store_item,
   image_store_item
 ) {
@@ -19,7 +37,7 @@ function Store_item(
   this.qty_available = qty_available;
   this.max_qty_allowed = max_qty_allowed;
   this.category_store_item = category_store_item;
-  this.shipping_cost = shipping_cost; // Assign the shipping_cost property
+  this.shipping_cost = shipping_cost;
   this.reviews_store_item = reviews_store_item;
   this.image_store_item = image_store_item;
 }
@@ -36,33 +54,16 @@ function Cart_item(
   this.qty_cart_item = qty_cart_item;
   this.shipping_cart_item = shipping_cart_item;
 }
-
 function Review_item(review_item, rating_item) {
   this.review_item = review_item;
   this.rating_item = rating_item;
 }
 
-let filterCategory = document.querySelector(".displayFilter");
-let currencyOptions = document.querySelector(".currencySelector");
-const screenDate = document.querySelector(".wrapp-intro-time");
-let productsWrapper = document.querySelector(".productsWrapper");
-let currencyFactor = 1;
-let currentFlag = document.querySelector(".current-flag");
-const add_to_cart_btn = document.querySelector(".btnAddItem");
-const remove_from_cart_btn = document.querySelector(".btnremoveItem");
-let store_item_array = [];
-let cart_item_array = [];
-let moneySign = "CAD";
-
-const cart_output = document.querySelector("#cartOutput");
-const cart_checkout = document.querySelector("#cartCheckout");
-
-// Function to validate Item ID existence
 const validateItemId = (productId) => {
   return store_item_array.some((item) => item.id_store_item === productId);
 };
 
-// Defining currency and flags
+// Only for setting the currency factor and the image flag
 const updateCurrency = function () {
   if (currencyOptions.value === "CAD") {
     currencyFactor = 1;
@@ -248,10 +249,7 @@ const addToCart = function () {
 };
 
 // Remove from cart
-
-// Remove from cart
-// Remove from cart
-const removeFromCart = function (productId) {
+const removeFromCart = function (productId, quantityToRemove) {
   const index = cart_item_array.findIndex(
     (item) => item.id_cart_item === productId
   );
@@ -259,52 +257,52 @@ const removeFromCart = function (productId) {
   if (index !== -1) {
     const currentQuantity = cart_item_array[index].qty_cart_item;
 
-    // Validate if the current quantity is greater than 0
-    if (currentQuantity <= 0) {
-      // Show alert indicating that removing 0 quantity is not allowed
-      alert("Removing 0 quantity is not allowed.");
-      return;
+    // Validate if the current quantity is greater than the quantity to remove
+    if (currentQuantity >= quantityToRemove) {
+      cart_item_array[index].qty_cart_item -= quantityToRemove;
+
+      // Restore the available quantity in the inventory
+      const product = store_item_array.find(
+        (item) => item.id_store_item === productId
+      );
+      if (product) {
+        product.qty_available += quantityToRemove;
+      }
+
+      // If the quantity in the cart reaches 0, remove the item from the cart
+      if (cart_item_array[index].qty_cart_item === 0) {
+        cart_item_array.splice(index, 1);
+      }
+
+      displayCartItems(cart_item_array);
+      calculateCartPricing();
+      calculateCartTotals();
+    } else {
+      alert("Quantity to remove exceeds the current quantity in the cart.");
     }
-
-    cart_item_array[index].qty_cart_item--;
-
-    // Restore the available quantity in the inventory
-    const product = store_item_array.find(
-      (item) => item.id_store_item === productId
-    );
-    if (product) {
-      product.qty_available++;
-    }
-
-    if (cart_item_array[index].qty_cart_item <= 0) {
-      cart_item_array.splice(index, 1);
-    }
-
-    displayCartItems(cart_item_array);
-    calculateCartPricing();
-    calculateCartTotals();
   } else {
     alert("Product not found in cart.");
   }
 };
 
+// Event handler
 remove_from_cart_btn.addEventListener("click", function () {
   const productIdInput = document.getElementById("addItemId");
   const productId = productIdInput.value.trim();
 
-  // Validate if quantity is greater than 0
+  // Validate if quantity to remove is greater than 0
   const quantityInput = document.getElementById("addItemQty");
-  const quantity = parseInt(quantityInput.value);
+  const quantityToRemove = parseInt(quantityInput.value);
 
-  if (quantity <= 0) {
-    alert("Quantity must be greater than 0.");
+  if (quantityToRemove <= 0) {
+    alert("Quantity to remove must be greater than 0.");
     return;
   }
 
-  removeFromCart(productId);
+  removeFromCart(productId, quantityToRemove);
 });
 
-// Función para calcular el precio total del carrito
+// Calculate total value
 const calculateCartPricing = function () {
   const total = cart_item_array.reduce(
     (accumulator, item) =>
@@ -315,7 +313,7 @@ const calculateCartPricing = function () {
   cart_output.textContent = total.toFixed(2);
 };
 
-// Función para mostrar los detalles de un artículo
+// Details of articles
 const displayItemDetails = function (productId) {
   const product = store_item_array.find(
     (item) => item.id_store_item === productId
@@ -387,7 +385,7 @@ const displayItemDetails = function (productId) {
   }
 };
 
-// Función para calcular el precio total del carrito
+// Total of cart
 const calculateCartTotals = function () {
   // Calcula el subtotal de los items en el carrito
   const subtotalItems = cart_item_array.reduce(
@@ -423,7 +421,7 @@ const calculateCartTotals = function () {
   `;
 };
 
-// Función para formatear el precio con la moneda seleccionada
+// Helper to format the prices
 const formatCurrency = function (amount) {
   return new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -431,11 +429,11 @@ const formatCurrency = function (amount) {
   }).format(amount);
 };
 
-// Llamada a la función calculateCartTotals para mostrar los totales al cargar la página
 calculateCartTotals();
 
-// Event listener para el botón de detalles del artículo
+// Event listener article details btn
 const btnDetails = document.querySelector(".btnDetails");
+
 btnDetails.addEventListener("click", function () {
   const productIdInput = document.getElementById("addItemId");
   const productId = productIdInput.value.trim();
@@ -444,7 +442,7 @@ btnDetails.addEventListener("click", function () {
   displayItemDetails(productId);
 });
 
-// Función para agregar una reseña
+// Adding a review
 const submitReview = function () {
   const productIdInput = document.getElementById("reviewId");
   const reviewInput = document.getElementById("reviewDesc");
@@ -724,17 +722,14 @@ const loadPage = function () {
     product15
   );
 
-  // Mostrar los productos de la tienda
   displayStoreItems(store_item_array);
 
-  // Mostrar los elementos del carrito (inicialmente vacío)
   displayCartItems(cart_item_array);
 
   updateCurrency();
 
   add_to_cart_btn.addEventListener("click", addToCart);
 
-  // Agregar el event listener al botón de submit review
   const submitReviewBtn = document.querySelector(".reviewSection .btn");
   submitReviewBtn.addEventListener("click", submitReview);
 };
@@ -744,7 +739,3 @@ document.addEventListener("DOMContentLoaded", loadPage);
 document.addEventListener("DOMContentLoaded", calculateCartTotals);
 
 document.addEventListener("DOMContentLoaded", loadPage);
-
-// REMOVING ITEM NOT WORKING FINE, IT REMOVES ONLY ONE BY ONE
-// IN THE CART SUMMARY, THE PRODUCT NAME IS IN LOWERCASE, SHOULD BE UPPERCASE LIKE THE GRID
-// AVERAGE RATING IS NOT WORKING, JUST KEEPS THE FIRST ONE, IT KEEPS THE TEXT BUT NOT THE REVIEW POINT
